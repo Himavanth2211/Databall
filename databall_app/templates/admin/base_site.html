@@ -1,0 +1,12 @@
+{% extends "admin/base_site.html" %}
+
+{% block nav-sidebar %}
+    {{ block.super }}
+    <div class="sidebar-module">
+        <h2>Procedures</h2>
+        <ul>
+            <li><a href="{% url 'schedule_practice_view' %}">Schedule Practice</a></li>
+
+        </ul>
+    </div>
+{% endblock %}
