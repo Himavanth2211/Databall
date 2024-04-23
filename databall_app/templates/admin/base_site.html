@@ -1,12 +1,23 @@
 {% extends "admin/base_site.html" %}
 
-{% block nav-sidebar %}
+{% block nav-global %}
     {{ block.super }}
-    <div class="sidebar-module">
-        <h2>Procedures</h2>
-        <ul>
-            <li><a href="{% url 'schedule_practice_view' %}">Schedule Practice</a></li>
-
-        </ul>
+    <div style="display: flex; justify-content: space-between; align-items: flex-start;">
+        <div class="sidebar-module" style="margin-right: 20px;"> <!-- Adjust the margin as needed -->
+            <h2>Database Procedures</h2>
+            <ul>
+                <li><a href="{% url 'schedule_practice_view' %}">Schedule Practice</a></li>
+                <li>TBD</li>
+            </ul>
+        </div>
+        <div class="sidebar-module">
+            <h2>Database Views</h2>
+            <ul>
+                <li><a href="{% url 'game_data_view' %}">Game Data</a></li>
+                <li><a href="{% url 'player_game_schedule_view' %}">Player Game Schedules</a></li>
+                <li><a href="{% url 'player_practice_schedule_view' %}">Player Practice Schedules</a></li>
+                <li><a href="{% url 'university_teams_view' %}">University Teams</a></li>
+            </ul>
+        </div>
     </div>
 {% endblock %}

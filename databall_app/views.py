@@ -4,6 +4,7 @@ from django.http import HttpResponse
 from django.urls import reverse
 from .forms import SchedulePracticeForm
 from django.db import connection
+from .models import GameData, PlayerGameSchedule, PlayerPracticeSchedule, UniversityTeams
 
 
 def schedule_practice_view(request):
@@ -37,4 +38,20 @@ def schedule_practice_view(request):
             return HttpResponse(f"<script>alert('{alert_message}'); window.location.href='{form_url}';</script>")
     else:
         form = SchedulePracticeForm()
-    return render(request, "schedule_practice.html", {"form": form})
+    return render(request, "admin/schedule_practice.html", {"form": form})
+
+def game_data_view(request):
+    data = GameData.objects.all()
+    return render(request, 'admin/view_game_data.html', {'data': data})
+
+def player_game_schedule_view(request):
+    schedule = PlayerGameSchedule.objects.all()
+    return render(request, 'admin/view_player_game_schedule.html', {'schedule': schedule})
+
+def player_practice_schedule_view(request):
+    schedule = PlayerPracticeSchedule.objects.all()
+    return render(request, 'admin/view_player_practice_schedule.html', {'schedule': schedule})
+
+def university_teams_view(request):
+    teams = UniversityTeams.objects.all()
+    return render(request, 'admin/view_university_teams.html', {'teams': teams})

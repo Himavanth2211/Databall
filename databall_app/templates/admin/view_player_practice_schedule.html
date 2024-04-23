@@ -1,0 +1,29 @@
+{% extends "admin/base_site.html" %}
+
+{% block content %}
+<div class="app-player-practice-schedule module">
+    <h1>Player Practice Schedules</h1>
+    <table>
+        <thead>
+            <tr>
+                <th>Player ID</th>
+                <th>Practice ID</th>
+                <th>Practice Date</th>
+                <th>Facility Name</th>
+                <th>Focus Area</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for schedule in schedule %}
+            <tr>
+                <td>{{ schedule.PlayerID }}</td>
+                <td>{{ schedule.PracticeID }}</td>
+                <td>{{ schedule.PracticeDate }}</td>
+                <td>{{ schedule.FacilityName }}</td>
+                <td>{{ schedule.FocusArea }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}

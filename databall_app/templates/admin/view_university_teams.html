@@ -1,0 +1,23 @@
+{% extends "admin/base_site.html" %}
+
+{% block content %}
+<div class="app-university-teams module">
+    <h1>University Teams</h1>
+    <table>
+        <thead>
+            <tr>
+                <th>Team Name</th>
+                <th>University ID</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for team in teams %}
+            <tr>
+                <td>{{ team.teamname }}</td>
+                <td>{{ team.universityid }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}

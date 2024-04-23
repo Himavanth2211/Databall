@@ -1,0 +1,33 @@
+{% extends "admin/base_site.html" %}
+
+{% block content %}
+<div class="app-game-data module">
+    <h1>Game Data</h1>
+    <table>
+        <thead>
+            <tr>
+                <th>Game ID</th>
+                <th>Date</th>
+                <th>Location</th>
+                <th>Home Team</th>
+                <th>Away Team</th>
+                <th>Scores</th>
+                <th>Winning Team ID</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for item in data %}
+            <tr>
+                <td>{{ item.GameID }}</td>
+                <td>{{ item.GameDate }}</td>
+                <td>{{ item.GameLocation }}</td>
+                <td>{{ item.HomeTeam }}</td>
+                <td>{{ item.AwayTeam }}</td>
+                <td>{{ item.Scores }}</td>
+                <td>{{ item.WinningTeamID }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}

@@ -1,0 +1,29 @@
+{% extends "admin/base_site.html" %}
+
+{% block content %}
+<div class="app-player-game-schedule module">
+    <h1>Player Game Schedules</h1>
+    <table>
+        <thead>
+            <tr>
+                <th>Player ID</th>
+                <th>Game ID</th>
+                <th>Game Date</th>
+                <th>Game Location</th>
+                <th>Team ID</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for schedule in schedule %}
+            <tr>
+                <td>{{ schedule.PlayerID }}</td>
+                <td>{{ schedule.GameID }}</td>
+                <td>{{ schedule.GameDate }}</td>
+                <td>{{ schedule.GameLocation }}</td>
+            <td>{{ schedule.TeamID }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}

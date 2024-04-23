@@ -103,3 +103,48 @@ class Practices(models.Model):
         db_table = 'Practices'
         verbose_name = 'Practice'
         verbose_name_plural = 'Practices'
+
+#VIEW Models
+
+class GameData(models.Model):
+    GameID = models.CharField(max_length=255, primary_key=True, db_column='GameID')  # Adjust db_column if necessary
+    GameDate = models.DateTimeField(db_column='GameDate')
+    GameLocation = models.CharField(max_length=255, db_column='GameLocation')
+    HomeTeam = models.CharField(max_length=255, db_column='HomeTeam')
+    AwayTeam = models.CharField(max_length=255, db_column='AwayTeam')
+    Scores = models.CharField(max_length=255, db_column='Scores')
+    WinningTeamID = models.CharField(max_length=255, blank=True, null=True, db_column='WinningTeamID')
+
+    class Meta:
+        managed = False
+        db_table = 'GameData'
+
+class PlayerGameSchedule(models.Model):
+    PlayerID = models.CharField(max_length=50, primary_key=True)
+    GameID = models.CharField(max_length=50)
+    GameDate = models.DateTimeField()
+    GameLocation = models.CharField(max_length=255)
+    TeamID = models.CharField(max_length=255)
+
+    class Meta:
+        managed = False
+        db_table = 'PlayerGameSchedule'
+
+class PlayerPracticeSchedule(models.Model):
+    PlayerID = models.CharField(max_length=50, db_column='PlayerID', primary_key=True)
+    PracticeID = models.CharField(max_length=50, db_column='PracticeID')
+    PracticeDate = models.DateTimeField(db_column='PracticeDate')
+    FacilityName = models.CharField(max_length=255, db_column='FacilityName')
+    FocusArea = models.CharField(max_length=255, db_column='FocusArea')
+
+    class Meta:
+        managed = False
+        db_table = 'PlayerPracticeSchedule'
+class UniversityTeams(models.Model):
+    teamname = models.CharField(max_length=255, primary_key=True)
+    universityid = models.CharField(max_length=50)
+
+    class Meta:
+        managed = False
+        db_table = 'UniversityTeams'
+
