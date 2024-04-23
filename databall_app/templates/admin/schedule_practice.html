@@ -1,52 +1,55 @@
 {% extends "admin/base_site.html" %}
+{% load static %}
+
+{% block extrastyle %}
+<link rel="stylesheet" type="text/css" href="{% static 'admin/css/schedule_practice.css' %}">
+{% endblock %}
 
 {% block content %}
-    <div class="custom-form-container">
-        <form method="post" class="submit-row">
-            {% csrf_token %}
-            <fieldset class="module aligned">
-                <h1>Schedule a Practice</h1>
-                <div class="form-row field-TeamID">
-                    <div>
-                        <label for="id_TeamID">Team ID:</label>
-                        {{ form.TeamID }}
-                    </div>
+<div class="custom-form-container">
+    <form method="post" class="submit-row">
+        {% csrf_token %}
+        <fieldset class="module aligned">
+            <h1>Schedule a Practice</h1>
+            <div class="form-row field-TeamID">
+                <div>
+                    <label for="id_TeamID">Team ID:</label>
+                    {{ form.TeamID }}
                 </div>
-                <div class="form-row field-PracticeDate">
-                    <div>
-                        <label for="id_PracticeDate">Practice Date:</label>
-                        {{ form.PracticeDate }}
-                    </div>
-                </div>
-                <div class="form-row field-PracticeDuration">
-                    <div>
-                        <label for="id_PracticeDuration">Practice Duration:</label>
-                        {{ form.PracticeDuration }}
-                    </div>
-                </div>
-                <div class="form-row field-FocusArea">
-                    <div>
-                        <label for="id_FocusArea">Focus Area:</label>
-                        {{ form.FocusArea }}
-                    </div>
-                </div>
-                <div class="form-row field-UniversityID">
-                    <div>
-                        <label for="id_UniversityID">University ID:</label>
-                        {{ form.UniversityID }}
-                    </div>
-                </div>
-                <div class="form-row field-FacilityID">
-                    <div>
-                        <label for="id_FacilityID">Facility ID:</label>
-                        {{ form.FacilityID }}
-                    </div>
-                </div>
-            </fieldset>
-            <div class="submit-row">
-                <button type="submit" class="default">Submit</button>
-                <a href="{% url 'admin:index' %}" class="button">Back to Home Page</a>
             </div>
-        </form>
-    </div>
+            <div class="form-row field-PracticeDate">
+                <div>
+                    <label for="id_PracticeDate">Practice Date:</label>
+                    {{ form.PracticeDate }}
+                </div>
+            </div>
+            <div class="form-row field-PracticeDuration">
+                <div>
+                    <label for="id_PracticeDuration">Practice Duration:</label>
+                    {{ form.PracticeDuration }}
+                </div>
+            </div>
+            <div class="form-row field-FocusArea">
+                <div>
+                    <label for="id_FocusArea">Focus Area:</label>
+                    {{ form.FocusArea }}
+                </div>
+            </div>
+            <div class="form-row field-UniversityID">
+                <div>
+                    <label for="id_UniversityID">University ID:</label>
+                    {{ form.UniversityID }}
+                </div>
+            </div>
+            <div class="form-row field-FacilityID">
+                <div>
+                    <label for="id_FacilityID">Facility ID:</label>
+                    {{ form.FacilityID }}
+                </div>
+            </div>
+        </fieldset>
+        <button type="submit" class="default">Submit</button>
+        <a href="{% url 'admin:index' %}" class="button">Back to Home Page</a>
+    </form>
+</div>
 {% endblock %}
