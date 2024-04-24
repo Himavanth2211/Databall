@@ -1,4 +1,5 @@
 {% extends "admin/base_site.html" %}
+{% load i18n %}
 {% load static %}
 
 {% block extrastyle %}
@@ -10,46 +11,24 @@
     <form method="post" class="submit-row">
         {% csrf_token %}
         <fieldset class="module aligned">
-            <h1>Schedule a Practice</h1>
-            <div class="form-row field-TeamID">
-                <div>
-                    <label for="id_TeamID">Team ID:</label>
-                    {{ form.TeamID }}
-                </div>
+            <h1>{% trans 'Schedule a Practice' %}</h1>
+            {{ form.non_field_errors }}
+            {% for field in form.visible_fields %}
+            <div class="form-row">
+                {{ field.errors }}
+                <label class="label" for="id_{{ field.name }}">{{ field.label }}</label>
+                {{ field }}
+                {% if field.help_text %}
+                <p class="help">{{ field.help_text }}</p>
+                {% endif %}
             </div>
-            <div class="form-row field-PracticeDate">
-                <div>
-                    <label for="id_PracticeDate">Practice Date:</label>
-                    {{ form.PracticeDate }}
-                </div>
-            </div>
-            <div class="form-row field-PracticeDuration">
-                <div>
-                    <label for="id_PracticeDuration">Practice Duration:</label>
-                    {{ form.PracticeDuration }}
-                </div>
-            </div>
-            <div class="form-row field-FocusArea">
-                <div>
-                    <label for="id_FocusArea">Focus Area:</label>
-                    {{ form.FocusArea }}
-                </div>
-            </div>
-            <div class="form-row field-UniversityID">
-                <div>
-                    <label for="id_UniversityID">University ID:</label>
-                    {{ form.UniversityID }}
-                </div>
-            </div>
-            <div class="form-row field-FacilityID">
-                <div>
-                    <label for="id_FacilityID">Facility ID:</label>
-                    {{ form.FacilityID }}
-                </div>
-            </div>
+            {% endfor %}
         </fieldset>
-        <button type="submit" class="default">Submit</button>
-        <a href="{% url 'admin:index' %}" class="button">Back to Home Page</a>
+        <div class="button-container">
+    <input type="submit" value="Submit" class="default">
+    <a href="{% url 'admin:index' %}" class="button">Back to Home Page</a>
+</div>
+
     </form>
 </div>
 {% endblock %}
