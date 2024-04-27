@@ -27,6 +27,9 @@ class Facilities(models.Model):
         verbose_name = 'Facility'
         verbose_name_plural = 'Facilities'
 
+    def __str__(self):
+        return self.FacilityID + ' - ' + self.FacilityName
+
 
 
 class Team(models.Model):
@@ -40,6 +43,8 @@ class Team(models.Model):
         db_table = 'Team'
         verbose_name = 'Team'
         verbose_name_plural = 'Teams'
+    def __str__(self):
+        return self.TeamID + ' - ' + self.TeamName
 
 
 
@@ -89,6 +94,8 @@ class Game(models.Model):
         verbose_name = 'Game'
         verbose_name_plural = 'Games'
 
+    def __str__(self):
+        return self.GameID
 
 
 class Practices(models.Model):

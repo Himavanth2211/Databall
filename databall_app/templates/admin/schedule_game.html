@@ -1,0 +1,33 @@
+{% extends "admin/base_site.html" %}
+{% load i18n %}
+{% load static %}
+
+{% block extrastyle %}
+<link rel="stylesheet" type="text/css" href="{% static 'admin/css/schedule_practice.css' %}">
+{% endblock %}
+
+{% block content %}
+<div class="custom-form-container">
+    <form method="post" class="submit-row">
+        {% csrf_token %}
+        <fieldset class="module aligned">
+            <h1>{% trans 'Schedule a Game' %}</h1>
+            {{ form.non_field_errors }}
+            {% for field in form.visible_fields %}
+            <div class="form-row">
+                {{ field.errors }}
+                <label class="label" for="id_{{ field.name }}">{{ field.label }}</label>
+                {{ field }}
+                {% if field.help_text %}
+                <p class="help">{{ field.help_text }}</p>
+                {% endif %}
+            </div>
+            {% endfor %}
+        </fieldset>
+        <div class="button-container">
+            <input type="submit" value="Submit" class="default">
+            <a href="{% url 'admin:index' %}" class="button">Back to Home Page</a>
+        </div>
+    </form>
+</div>
+{% endblock %}
