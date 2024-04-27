@@ -6,5 +6,4 @@ class SchedulePracticeForm(forms.Form):
     PracticeDate = forms.DateField(widget=forms.widgets.DateInput(attrs={'type': 'date'}), label="Practice Date: ")
     PracticeDuration = forms.IntegerField(min_value=1, label="Duration in hours: ")
     FocusArea = forms.CharField(max_length=100, label="Focus Area:")
-    UniversityID = forms.ModelChoiceField(queryset=University.objects.all(), label="Select University: ")
     FacilityID = forms.ModelChoiceField(queryset=Facilities.objects.all(), label="Select Facility: ")

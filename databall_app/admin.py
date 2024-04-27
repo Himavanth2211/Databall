@@ -14,35 +14,31 @@ class TeamAdmin(admin.ModelAdmin):
     search_fields = ('TeamID', 'TeamName')
 
 class CoachAdmin(admin.ModelAdmin):
-    list_display = ('CoachID', 'CoachName', 'CoachRole', 'Team', 'University')
-    search_fields = ('CoachID', 'CoachName')
+    list_display = ('CoachID', 'CoachName', 'CoachRole', 'Team')
+
 
 class PlayerAdmin(admin.ModelAdmin):
-    list_display = ('PlayerID', 'PlayerName', 'Major', 'DOB', 'YearInSchool', 'Team', 'University', 'PlayerPosition')
-    search_fields = ('PlayerID', 'PlayerName')
+    list_display = ('PlayerID', 'PlayerName', 'Major', 'DOB', 'YearInSchool', 'Team', 'PlayerPosition')
 
 class GameAdmin(admin.ModelAdmin):
-    list_display = ('GameID', 'GameDate', 'GameLocation', 'HomeTeam', 'AwayTeam', 'Scores', 'WinningTeam')
-    search_fields = ('GameID', 'GameLocation')
+    list_display = ('GameID', 'GameDate', 'HomeTeam', 'AwayTeam', 'Scores', 'WinningTeam')
+    readonly_fields = ('GameID', 'GameDate')
+
 
 class PracticesAdmin(admin.ModelAdmin):
-    list_display = ('PracticeID', 'PracticeDate', 'Team', 'PracticeDuration', 'FocusArea', 'University', 'Facility')
-    search_fields = ('PracticeID', 'FocusArea')
+    list_display = ('PracticeID', 'PracticeDate', 'Team', 'PracticeDuration', 'FocusArea', 'Facility')
 
 class GameDataAdmin(admin.ModelAdmin):
-    list_display = ['GameID', 'GameDate', 'GameLocation', 'HomeTeam', 'AwayTeam', 'Scores', 'WinningTeamID']
-    readonly_fields = ['GameID', 'GameDate', 'GameLocation', 'HomeTeam', 'AwayTeam', 'Scores', 'WinningTeamID']
-
+    list_display = ('GameID', 'GameDate', 'GameLocation', 'HomeTeam', 'AwayTeam', 'Scores', 'WinningTeamID')
+    readonly_fields = ('GameID', 'GameDate', 'GameLocation')
     def get_model_perms(self, request):
         return {}
 
 class PlayerGameScheduleAdmin(admin.ModelAdmin):
-    list_display = ['PlayerID', 'GameID', 'GameDate', 'GameLocation', 'TeamID']
-    readonly_fields = ['PlayerID', 'GameID', 'GameDate', 'GameLocation', 'TeamID']
-
+    list_display = ('PlayerID', 'GameID', 'GameDate', 'GameLocation', 'TeamID')
+    readonly_fields = ('PlayerID', 'GameID', 'GameDate', 'GameLocation', 'TeamID')
     def get_model_perms(self, request):
         return {}
-
 class PlayerPracticeScheduleAdmin(admin.ModelAdmin):
     list_display = ['PlayerID', 'PracticeID', 'PracticeDate', 'FacilityName', 'FocusArea']
     readonly_fields = ['PlayerID', 'PracticeID', 'PracticeDate', 'FacilityName', 'FocusArea']

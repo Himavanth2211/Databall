@@ -22,7 +22,6 @@ def schedule_practice_view(request):
                     form.cleaned_data['PracticeDate'],
                     form.cleaned_data['PracticeDuration'],
                     form.cleaned_data['FocusArea'],
-                    form.cleaned_data['UniversityID'],
                     form.cleaned_data['FacilityID'],
                     message
                 ])
