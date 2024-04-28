@@ -44,17 +44,6 @@ input[type="submit"]:hover,
     background-color: #0056b3;
 }
 
-.button {
-    text-decoration: none;
-    display: inline-block;
-    background-color: #6c757d;
-}
-
-
-.button-container {
-    display: flex;
-    justify-content: flex-start;
-}
 
 
 .form-row input:focus,
@@ -63,3 +52,24 @@ input[type="submit"]:hover,
     border: 1px solid #007bff;
     box-shadow: 0 0 0 3px rgba(0, 123, 255, 0.25);
 }
+
+
+.default {
+    display: inline-block; /* Or flex, if you want to use flexbox properties */
+    padding: 10px 15px; /* Adjust to match the 'Update' button size */
+    margin: 0 5px; /* Adds margin around the buttons */
+    background-color: #007bff; /* The background color of the 'Update' button */
+    color: white; /* Text color */
+    text-align: center;
+    text-decoration: none; /* Remove underline from links */
+    border: none; /* Remove borders */
+    border-radius: 5px; /* To match the 'Update' button's border-radius */
+    cursor: pointer;
+    transition: background-color 0.3s ease; /* Smooth background color transition on hover */
+}
+
+.default:hover {
+    background-color: #0056b3; /* Darker shade on hover, adjust color as needed */
+}
+
+/* If you're using Bootstrap or a similar framework, it may already have classes to style buttons. */

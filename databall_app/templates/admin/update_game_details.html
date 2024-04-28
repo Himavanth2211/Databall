@@ -11,7 +11,7 @@
     <form method="post" class="submit-row">
         {% csrf_token %}
         <fieldset class="module aligned">
-            <h1>{% trans 'Schedule a Practice' %}</h1>
+            <h1>{% trans 'Update Game Details' %}</h1>
             {{ form.non_field_errors }}
             {% for field in form.visible_fields %}
             <div class="form-row">
@@ -25,10 +25,10 @@
             {% endfor %}
         </fieldset>
         <div class="button-container">
-    <input type="submit" value="Submit" class="default">
-    <a href="{% url 'admin:index' %}" class="button">Back to Home Page</a>
-</div>
-
+            <input type="submit" value="{% trans 'Update' %}" class="default">
+            <a href="{% url 'admin:index' %}" class="default button">{% trans 'Back to Home Page' %}</a>
+            <a href="/admin/databall_app/game/" class="default button">{% trans 'View Game Table' %}</a>
+        </div>
     </form>
 </div>
 {% endblock %}

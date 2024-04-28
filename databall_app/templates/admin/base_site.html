@@ -3,11 +3,12 @@
 {% block nav-global %}
     {{ block.super }}
     <div style="display: flex; justify-content: space-between; align-items: flex-start;">
-        <div class="sidebar-module" style="margin-right: 20px;"> <!-- Adjust the margin as needed -->
+        <div class="sidebar-module" style="margin-right: 20px;">
             <h2>Database Procedures</h2>
             <ul>
                 <li><a href="{% url 'schedule_practice_view' %}">Schedule Practice</a></li>
                 <li><a href="{% url 'schedule_game_view' %}">Schedule Game</a></li>
+                <li><a href="{% url 'update_game_details_view' %}">Register/Update WIN</a></li>
             </ul>
         </div>
         <div class="sidebar-module">

@@ -1,5 +1,5 @@
 from django import forms
-from .models import Team, Facilities
+from .models import Team, Facilities, Game
 
 class SchedulePracticeForm(forms.Form):
     TeamID = forms.ModelChoiceField(queryset=Team.objects.all(), label="Select Team: ")
@@ -19,3 +19,8 @@ class ScheduleGameForm(forms.Form):
     #Optional
     Scores = forms.CharField(max_length=100, required=False, label="Scores (optional):")
     WinningTeamID = forms.ModelChoiceField(queryset=Team.objects.all(), required=False, label="Select Winning Team (optional):")
+
+class UpdateGameDetailsForm(forms.Form):
+    GameID = forms.ModelChoiceField(queryset=Game.objects.all(), label="Select Game: ")
+    WinningTeamID = forms.ModelChoiceField(queryset=Team.objects.all(), label="Select Winning Team: ")
+    Scores = forms.CharField(max_length=100, label="Enter Scores: ")

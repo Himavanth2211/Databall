@@ -1,7 +1,9 @@
 import cx_Oracle
-from .forms import SchedulePracticeForm, ScheduleGameForm
+from .forms import SchedulePracticeForm, ScheduleGameForm, UpdateGameDetailsForm
 from django.db import connection
 from .models import GameData, PlayerGameSchedule, PlayerPracticeSchedule, UniversityTeams
+from django.shortcuts import render, redirect
+from django.contrib import messages
 
 
 def schedule_practice_view(request):
@@ -35,10 +37,6 @@ def schedule_practice_view(request):
     else:
         form = SchedulePracticeForm()
         return render(request, "admin/schedule_practice.html", {"form": form})
-
-
-from django.shortcuts import render, redirect
-from django.contrib import messages
 
 
 def schedule_game_view(request):
@@ -87,6 +85,42 @@ def schedule_game_view(request):
         form = ScheduleGameForm()
         return render(request, "admin/schedule_game.html", {"form": form})
 
+
+def update_game_details_view(request):
+    if request.method == 'POST':
+        form = UpdateGameDetailsForm(request.POST)
+        if form.is_valid():
+            try:
+                conn = connection.cursor().connection
+                cursor = conn.cursor()
+                message = cursor.var(cx_Oracle.DB_TYPE_VARCHAR)
+
+                game_id = form.cleaned_data['GameID'].GameID
+                winning_team_id = form.cleaned_data['WinningTeamID'].TeamID
+                scores = form.cleaned_data['Scores']
+
+                cursor.callproc("UpdateGameDetails", [
+                    game_id,
+                    winning_team_id,
+                    scores,
+                    message
+                ])
+
+                if message.getvalue() == 'Game not found.':
+                    messages.error(request, message.getvalue())
+                if message.getvalue() == 'Error: Winning team must be either the home team or the away team.':
+                    messages.error(request, message.getvalue())
+                messages.success(request, message.getvalue())
+                return redirect('update_game_details_view')
+            except Exception as e:
+                messages.error(request, f'Error updating game details: {str(e)}')
+                return render(request, "admin/update_game_details.html", {"form": form})
+        else:
+            messages.error(request, "Invalid form submission.")
+            return render(request, "admin/update_game_details.html", {"form": form})
+    else:
+        form = UpdateGameDetailsForm()
+        return render(request, "admin/update_game_details.html", {"form": form})
 
 def game_data_view(request):
     data = GameData.objects.all()
