@@ -95,8 +95,7 @@ class Game(models.Model):
         verbose_name_plural = 'Games'
 
     def __str__(self):
-        return self.GameID
-
+        return f"{self.GameID}: {self.HomeTeam.TeamName} vs {self.AwayTeam.TeamName}"
 
 class Practices(models.Model):
     PracticeID = models.CharField(max_length=255, primary_key=True)

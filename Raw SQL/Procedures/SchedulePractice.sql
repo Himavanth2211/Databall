@@ -1,7 +1,7 @@
 --UserStory2
-CREATE SEQUENCE Practices_seq START WITH 1 INCREMENT BY 1;
+CREATE SEQUENCE Practices_seq START WITH 21 INCREMENT BY 1 NOMAXVALUE;
 
-CREATE OR REPLACE PROCEDURE SchedulePractice(
+create or replace PROCEDURE SchedulePractice(
     p_TeamID VARCHAR2,
     p_PracticeDate TIMESTAMP,
     p_PracticeDuration VARCHAR2,
@@ -9,30 +9,23 @@ CREATE OR REPLACE PROCEDURE SchedulePractice(
     p_FacilityID VARCHAR2,
     p_Message OUT VARCHAR2
 ) AS
-    v_count NUMBER;
+    facility_available BOOLEAN;
 BEGIN
-    -- Check for existing bookings within the desired timeframe
-    SELECT COUNT(*)
-    INTO v_count
-    FROM Practices
-    WHERE FacilityID = p_FacilityID
-    AND (p_PracticeDate BETWEEN PracticeDate AND PracticeDate + INTERVAL '1' HOUR * TO_NUMBER(p_PracticeDuration));
+    facility_available := CheckFacilityAvailability(p_FacilityID, p_PracticeDate, TO_NUMBER(p_PracticeDuration));
 
     -- If the facility is booked, set an error message
-    IF v_count > 0 THEN
-        p_Message := 'The facility is already booked for the given time.';
+    IF NOT facility_available THEN
+        p_Message := 'The facility is already booked for the given time!';
     ELSE
         BEGIN
             -- Insert the new practice session
             INSERT INTO Practices (
-                PracticeID,
                 PracticeDate,
                 TeamID,
                 PracticeDuration,
                 FocusArea,
                 FacilityID
             ) VALUES (
-                'PR' || TO_CHAR(Practices_seq.NEXTVAL, 'FM0000'),
                 p_PracticeDate,
                 p_TeamID,
                 p_PracticeDuration,
@@ -55,5 +48,5 @@ EXCEPTION
         p_Message := 'Transaction error: ' || SQLERRM;
         ROLLBACK;
 END;
-/
+
 

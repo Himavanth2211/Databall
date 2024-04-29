@@ -73,7 +73,7 @@ CREATE TABLE Practices (
     PracticeID VARCHAR2(255) PRIMARY KEY,
     PracticeDate TIMESTAMP NOT NULL,
     TeamID VARCHAR2(255) NOT NULL,
-    PracticeDuration VARCHAR2(255),
+    PracticeDuration NUMBER,
     FocusArea VARCHAR2(255),
     FacilityID VARCHAR2(255) NOT NULL,
     CONSTRAINT fk_Practices_Team FOREIGN KEY (TeamID)
@@ -126,11 +126,11 @@ INSERT INTO Game (GameID, GameDate, FacilityID, HomeTeamID, AwayTeamID, Scores, 
 INSERT INTO Game (GameID, GameDate, FacilityID, HomeTeamID, AwayTeamID, Scores, WinningTeamID) VALUES ('G05', TO_TIMESTAMP('2024-03-24 16:00:00', 'YYYY-MM-DD HH24:MI:SS'), 'F05', 'T05', 'T01', '2-2', 'T05');
 
 -- Insert data into Practices
-INSERT INTO Practices (PracticeID, PracticeDate, TeamID, PracticeDuration, FocusArea, FacilityID) VALUES ('PR01', TO_TIMESTAMP('2024-03-15 09:00:00', 'YYYY-MM-DD HH24:MI:SS'), 'T01', '2', 'Offense', 'F01');
-INSERT INTO Practices (PracticeID, PracticeDate, TeamID, PracticeDuration, FocusArea, FacilityID) VALUES ('PR02', TO_TIMESTAMP('2024-03-16 10:00:00', 'YYYY-MM-DD HH24:MI:SS'), 'T02', '1.5', 'Defense', 'F02');
-INSERT INTO Practices (PracticeID, PracticeDate, TeamID, PracticeDuration, FocusArea, FacilityID) VALUES ('PR03', TO_TIMESTAMP('2024-03-17 11:00:00', 'YYYY-MM-DD HH24:MI:SS'), 'T03', '2', 'Tactics', 'F03');
-INSERT INTO Practices (PracticeID, PracticeDate, TeamID, PracticeDuration, FocusArea, FacilityID) VALUES ('PR04', TO_TIMESTAMP('2024-03-18 12:00:00', 'YYYY-MM-DD HH24:MI:SS'), 'T04', '1', 'Strength', 'F04');
-INSERT INTO Practices (PracticeID, PracticeDate, TeamID, PracticeDuration, FocusArea, FacilityID) VALUES ('PR05', TO_TIMESTAMP('2024-03-19 13:00:00', 'YYYY-MM-DD HH24:MI:SS'), 'T05', '2.5', 'Stamina', 'F05');
+INSERT INTO Practices (PracticeID, PracticeDate, TeamID, PracticeDuration, FocusArea, FacilityID) VALUES ('PR01', TO_TIMESTAMP('2024-03-15 09:00:00', 'YYYY-MM-DD HH24:MI:SS'), 'T01', 2, 'Offense', 'F01');
+INSERT INTO Practices (PracticeID, PracticeDate, TeamID, PracticeDuration, FocusArea, FacilityID) VALUES ('PR02', TO_TIMESTAMP('2024-03-16 10:00:00', 'YYYY-MM-DD HH24:MI:SS'), 'T02', 1.5, 'Defense', 'F02');
+INSERT INTO Practices (PracticeID, PracticeDate, TeamID, PracticeDuration, FocusArea, FacilityID) VALUES ('PR03', TO_TIMESTAMP('2024-03-17 11:00:00', 'YYYY-MM-DD HH24:MI:SS'), 'T03', 2, 'Tactics', 'F03');
+INSERT INTO Practices (PracticeID, PracticeDate, TeamID, PracticeDuration, FocusArea, FacilityID) VALUES ('PR04', TO_TIMESTAMP('2024-03-18 12:00:00', 'YYYY-MM-DD HH24:MI:SS'), 'T04', 1, 'Strength', 'F04');
+INSERT INTO Practices (PracticeID, PracticeDate, TeamID, PracticeDuration, FocusArea, FacilityID) VALUES ('PR05', TO_TIMESTAMP('2024-03-19 13:00:00', 'YYYY-MM-DD HH24:MI:SS'), 'T05', 2.5, 'Stamina', 'F05');
 
 
 
