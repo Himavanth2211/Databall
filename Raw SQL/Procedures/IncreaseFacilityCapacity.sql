@@ -1,6 +1,6 @@
 CREATE OR REPLACE PROCEDURE IncreaseFacilityCapacity(
     facility_id IN VARCHAR2,
-    increase_amount IN NUMBER,
+    increased_amount IN NUMBER,
     p_Message OUT VARCHAR2
 )
 AS
@@ -10,13 +10,15 @@ BEGIN
     SELECT FacilityCapacity INTO current_capacity
     FROM Facilities
     WHERE FacilityID = facility_id;
-
-    -- Increase the capacity by the given amount
-    current_capacity := current_capacity + increase_amount;
+    
+    IF increased_amount <= current_capacity THEN
+        p_Message := 'Error: Increased capacity must be greater than current one.';
+        RETURN;
+    END IF;
 
     -- Update the facility with the new capacity
     UPDATE Facilities
-    SET FacilityCapacity = current_capacity
+    SET FacilityCapacity = increased_amount
     WHERE FacilityID = facility_id;
 
     -- Commit the transaction

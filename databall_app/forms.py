@@ -57,5 +57,6 @@ class IncreaseFacilityCapacityForm(forms.Form):
     )
     IncreaseAmount = forms.IntegerField(
         min_value=1,
-        label="Increased Amount:"
+        label="Increased Amount:",
+        help_text="Specify the total new capacity!"
     )

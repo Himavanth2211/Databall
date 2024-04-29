@@ -155,6 +155,8 @@ def increase_facility_capacity_view(request):
                 msg_value = message.getvalue()
                 if 'successfully' in msg_value:
                     messages.success(request, msg_value)
+                elif 'Error: Increase amount must be greater than current one.' == msg_value:
+                    messages.error(request, msg_value)
                 else:
                     messages.error(request, msg_value)
 
