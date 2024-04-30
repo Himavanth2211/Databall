@@ -27,7 +27,7 @@ def schedule_practice_view(request):
                 ])
                 if 'already' in message.getvalue():
                     messages.error(request, message.getvalue())
-                    return redirect('schedule_practice')
+                    return redirect('schedule_practice_view')
                 else:
                     messages.success(request, message.getvalue())
                 return render(request, "admin/schedule_practice.html", {"form": form})
