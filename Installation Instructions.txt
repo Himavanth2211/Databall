@@ -1,1 +1,22 @@
+Firstly, clone the project 
+git clone git@github.com:Himavanth2211/Databall.git
 
+Software Requirements:
+
+1. Python 3.10
+https://www.python.org/downloads/
+2. Oracle SQL Client
+https://www.oracle.com/database/technologies/instant-client/winx64-64-downloads.html
+3. Microsoft Windows Visual Build Tools are required in order to Cx_Oracle package install successfully.
+https://aka.ms/vs/17/release/vs_BuildTools.exe
+Open the installation and install tools related to Windows 10 SDK
+
+After installing required items, and on vu network:
+
+navigate to folder where manage.py is present (basically project folder)
+open command prompt
+1. pip -r install requirements.txt
+2. python manage.py migrate
+3. python manage.py runserver
+
+and navigate to the server link that the output specifies.
