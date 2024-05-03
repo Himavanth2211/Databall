@@ -32,6 +32,11 @@ VALUES ('F09', 'Desert Financial Arena', 'Campus', 14198, 'U1009');
 INSERT INTO facilities (FACILITYID, FACILITYNAME, FACILITYLOCATION, FACILITYCAPACITY, UNIVERSITYID) 
 VALUES ('F10', 'Littlejohn Coliseum', 'Campus', 9000, 'U1010');
 
+/*
+ALTER TABLE Facilities
+ADD FacilityLocation VARCHAR(10);
+*/
+
 -- Insert data into Team
 INSERT INTO Team (TeamID, TeamName, Division, UniversityID) VALUES ('T01', 'Villanova Wildcats', 'Division A', 'U1001');
 INSERT INTO Team (TeamID, TeamName, Division, UniversityID) VALUES ('T02', 'Drexel Dragons', 'Division B', 'U1002');
@@ -44,6 +49,12 @@ INSERT INTO Team (TEAMID, TEAMNAME, DIVISION, UNIVERSITYID) VALUES ('T08', 'Hous
 INSERT INTO Team (TEAMID, TEAMNAME, DIVISION, UNIVERSITYID) VALUES ('T09', 'Arizona State Sun Devils', 'Division D', 'U1009');
 INSERT INTO Team (TEAMID, TEAMNAME, DIVISION, UNIVERSITYID) VALUES ('T10', 'Clemson Tigers', 'Division E', 'U1010');
 
+/*
+UPDATE Team
+SET Division = 'Division A'
+WHERE TeamID = 'T02';
+
+*/
 -- Insert data into Coach
 INSERT INTO Coach (CoachID, CoachName, CoachRole, TeamID) VALUES ('C01', 'John Doe', 'Head Coach', 'T01');
 INSERT INTO Coach (CoachID, CoachName, CoachRole, TeamID) VALUES ('C02', 'Jane Smith', 'Assistant Coach', 'T02');
@@ -90,6 +101,7 @@ VALUES ('G09', TO_TIMESTAMP('2024-04-04 13:00:00', 'YYYY-MM-DD HH24:MI:SS'), 'F0
 INSERT INTO Game (GameID, GameDate, facilityid, HomeTeamID, AwayTeamID, Scores, WinningTeamID) 
 VALUES ('G10', TO_TIMESTAMP('2024-04-05 14:00:00', 'YYYY-MM-DD HH24:MI:SS'), 'F10', 'T10', 'T06', '91-100', 'T10');
 -- Insert data into Practices
+
 INSERT INTO Practices (PracticeID, PracticeDate, TeamID, PracticeDuration, FocusArea, FacilityID) VALUES ('PR01', TO_TIMESTAMP('2024-03-15 09:00:00', 'YYYY-MM-DD HH24:MI:SS'), 'T01', 2, 'Offense', 'F01');
 INSERT INTO Practices (PracticeID, PracticeDate, TeamID, PracticeDuration, FocusArea, FacilityID) VALUES ('PR02', TO_TIMESTAMP('2024-03-16 10:00:00', 'YYYY-MM-DD HH24:MI:SS'), 'T02', 1.5, 'Defense', 'F02');
 INSERT INTO Practices (PracticeID, PracticeDate, TeamID, PracticeDuration, FocusArea, FacilityID) VALUES ('PR03', TO_TIMESTAMP('2024-03-17 11:00:00', 'YYYY-MM-DD HH24:MI:SS'), 'T03', 2, 'Tactics', 'F03');
@@ -105,3 +117,5 @@ INSERT INTO Practices (PracticeID, PracticeDate, TeamID, PracticeDuration, Focus
 VALUES ('PR09', TO_TIMESTAMP('2024-04-09 12:00:00', 'YYYY-MM-DD HH24:MI:SS'), 'T09', '1', 'Strength', 'F09');
 INSERT INTO Practices (PracticeID, PracticeDate, TeamID, PracticeDuration, FocusArea, FacilityID) 
 VALUES ('PR10', TO_TIMESTAMP('2024-04-10 13:00:00', 'YYYY-MM-DD HH24:MI:SS'), 'T10', '2', 'Stamina', 'F10');
+
+-- ALTER TABLE Practices MODIFY (PracticeDuration NUMBER);
