@@ -10,6 +10,12 @@ create or replace PROCEDURE SchedulePractice(
 ) AS
     facility_available BOOLEAN;
 BEGIN
+    
+    IF NOT IsTeamAvailable(p_TeamID, p_PracticeDate, TO_NUMBER(p_PracticeDuration)) THEN
+        p_Message := 'The team is already booked for another game or practice at this time.';
+        RETURN;
+    END IF;
+    
     facility_available := CheckFacilityAvailability(p_FacilityID, p_PracticeDate, TO_NUMBER(p_PracticeDuration));
 
     -- If the facility is booked

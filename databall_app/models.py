@@ -13,7 +13,6 @@ class University(models.Model):
         verbose_name_plural = 'Universities'
 
 
-
 class Facilities(models.Model):
     FacilityID = models.CharField(max_length=255, primary_key=True)
     FacilityName = models.CharField(max_length=255)
@@ -31,7 +30,6 @@ class Facilities(models.Model):
         return self.FacilityID + ' - ' + self.FacilityName
 
 
-
 class Team(models.Model):
     TeamID = models.CharField(max_length=255, primary_key=True)
     TeamName = models.CharField(max_length=255)
@@ -43,9 +41,9 @@ class Team(models.Model):
         db_table = 'Team'
         verbose_name = 'Team'
         verbose_name_plural = 'Teams'
+
     def __str__(self):
         return self.TeamID + ' - ' + self.TeamName
-
 
 
 class Coach(models.Model):
@@ -59,7 +57,6 @@ class Coach(models.Model):
         db_table = 'Coach'
         verbose_name = 'Coach'
         verbose_name_plural = 'Coaches'
-
 
 
 class Player(models.Model):
@@ -78,7 +75,6 @@ class Player(models.Model):
         verbose_name_plural = 'Players'
 
 
-
 class Game(models.Model):
     GameID = models.CharField(max_length=255, primary_key=True)
     GameDate = models.DateTimeField()
@@ -86,7 +82,8 @@ class Game(models.Model):
     HomeTeam = models.ForeignKey(Team, on_delete=models.CASCADE, related_name='home_games', db_column='HomeTeamID')
     AwayTeam = models.ForeignKey(Team, on_delete=models.CASCADE, related_name='away_games', db_column='AwayTeamID')
     Scores = models.CharField(max_length=255, blank=True, null=True)
-    WinningTeam = models.ForeignKey(Team, on_delete=models.SET_NULL, null=True, blank=True, related_name='won_games', db_column='WinningTeamID')
+    WinningTeam = models.ForeignKey(Team, on_delete=models.SET_NULL, null=True, blank=True, related_name='won_games',
+                                    db_column='WinningTeamID')
 
     class Meta:
         managed = False
@@ -96,6 +93,7 @@ class Game(models.Model):
 
     def __str__(self):
         return f"{self.GameID}: {self.HomeTeam.TeamName} vs {self.AwayTeam.TeamName}"
+
 
 class Practices(models.Model):
     PracticeID = models.CharField(max_length=255, primary_key=True)
@@ -159,6 +157,3 @@ class UniversityTeams(models.Model):
     class Meta:
         managed = False
         db_table = 'UniversityTeams'
-
-
-

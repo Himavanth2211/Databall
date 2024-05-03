@@ -25,7 +25,10 @@ def schedule_practice_view(request):
                     facility_id,
                     message
                 ])
-                if 'already' in message.getvalue():
+                if 'is already booked for the' in message.getvalue():
+                    messages.error(request, message.getvalue())
+                    return redirect('schedule_practice_view')
+                elif 'already booked for another game' in message.getvalue():
                     messages.error(request, message.getvalue())
                     return redirect('schedule_practice_view')
                 else:
@@ -75,9 +78,11 @@ def schedule_game_view(request):
                     messages.error(request, message.getvalue())
                 elif message.getvalue() == 'The facility is already booked for the given time!':
                     messages.error(request, message.getvalue())
+                elif 'teams is already booked for another game or practice' in message.getvalue():
+                    messages.error(request, message.getvalue())
                 else:
                     messages.success(request, message.getvalue())
-                    return redirect('schedule_game')
+                    return redirect('schedule_game_view')
                 return render(request, "admin/schedule_game.html", {"form": form})
             except Exception as e:
                 messages.error(request, str(e))

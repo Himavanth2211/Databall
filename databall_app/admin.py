@@ -23,10 +23,14 @@ class PlayerAdmin(admin.ModelAdmin):
 class GameAdmin(admin.ModelAdmin):
     list_display = ('GameID', 'GameDate', 'HomeTeam', 'AwayTeam', 'Scores', 'WinningTeam')
     readonly_fields = ('GameID', 'GameDate')
+    def has_add_permission(self, request):
+        return False
 
 
 class PracticesAdmin(admin.ModelAdmin):
     list_display = ('PracticeID', 'PracticeDate', 'Team', 'PracticeDuration', 'FocusArea', 'Facility')
+    def has_add_permission(self, request):
+        return False
 
 class GameDataAdmin(admin.ModelAdmin):
     list_display = ('GameID', 'GameDate', 'GameLocation', 'HomeTeam', 'AwayTeam', 'Scores', 'WinningTeamID')

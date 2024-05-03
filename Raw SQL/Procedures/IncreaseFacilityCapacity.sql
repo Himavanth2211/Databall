@@ -30,7 +30,7 @@ BEGIN
 EXCEPTION
     WHEN NO_DATA_FOUND THEN
         p_Message := 'Facility not found.';
-        ROLLBACK; -- Optional rollback if you decide to maintain transaction integrity on failure
+        ROLLBACK;
     WHEN OTHERS THEN
         p_Message := 'An error occurred while increasing facility capacity: ' || SQLERRM;
         ROLLBACK;

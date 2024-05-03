@@ -18,15 +18,19 @@ BEGIN
         p_Message := 'Error: Winning team must be either the home team or the away team.';
         RETURN;
     END IF;
-
+    
     IF p_HomeTeamID = p_AwayTeamID THEN
         p_Message := 'Error: Home team and away team cannot be the same.';
         RETURN;
     END IF;
 
+    IF NOT IsTeamAvailable(p_HomeTeamID, p_GameDate, 2) OR NOT IsTeamAvailable(p_AwayTeamID, p_GameDate, 2) THEN
+        p_Message := 'One of the teams is already booked for another game or practice at this time.';
+        RETURN;
+    END IF;
+    
     facility_available := CheckFacilityAvailability(p_FacilityID, p_GameDate, 2);
-
-    -- If the facility is booked, set an error message
+    
     IF NOT facility_available THEN
         p_Message := 'The facility is already booked for the given time!';
     ELSE
