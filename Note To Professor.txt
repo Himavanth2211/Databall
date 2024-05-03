@@ -1,3 +1,6 @@
+Firstly, clone the project 
+git clone git@github.com:Himavanth2211/Databall.git
+
 Software Requirements:
 
 1. Python 3.10
