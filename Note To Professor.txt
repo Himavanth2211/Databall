@@ -1,0 +1,11 @@
+1. Python 3.10
+2. Modules in python that required are specified in requirements.txt file on GitHub repo home page.
+3. Microsoft Windows Visual Build Tools are required in order to Cx_Oracle package install successfully.
+
+After installing required items, and on vu network:
+
+navigate to folder where manage.py is present (basically project folder)
+open command prompt
+python manage.py runserver
+
+and navigate to the server link that the output specifies.
