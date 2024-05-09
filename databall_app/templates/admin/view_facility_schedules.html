@@ -1,0 +1,27 @@
+{% extends 'base_site.html' %}
+
+{% block content %}
+<h2>View Facility Schedules</h2>
+
+<form method="get" action="">
+    {{ form.as_p }}
+    <button type="submit">Filter</button>
+</form>
+
+<table>
+    <tr>
+        <th>Facility ID</th>
+        <th>Event Type</th>
+        <th>Start Time</th>
+        <th>End Time</th>
+    </tr>
+    {% for schedule in schedules %}
+    <tr>
+        <td>{{ schedule.facility_id }}</td>
+        <td>{{ schedule.event_type }}</td>
+        <td>{{ schedule.event_start }}</td>
+        <td>{{ schedule.event_end }}</td>
+    </tr>
+    {% endfor %}
+</table>
+{% endblock %}

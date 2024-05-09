@@ -1,5 +1,7 @@
 from django.contrib import admin
-from .models import University, Facilities, Team, Coach, Player, Game, Practices, GameData, PlayerGameSchedule, PlayerPracticeSchedule, UniversityTeams
+from .models import University, Facilities, Team, Coach, Player, Game, Practices, GameData, PlayerGameSchedule, \
+    PlayerPracticeSchedule, UniversityTeams, FacilitySchedule
+
 
 class UniversityAdmin(admin.ModelAdmin):
     list_display = ('UniversityID', 'UniversityName', 'Location')
@@ -21,7 +23,7 @@ class PlayerAdmin(admin.ModelAdmin):
     list_display = ('PlayerID', 'PlayerName', 'Major', 'DOB', 'YearInSchool', 'Team', 'PlayerPosition')
 
 class GameAdmin(admin.ModelAdmin):
-    list_display = ('GameID', 'GameDate', 'HomeTeam', 'AwayTeam', 'Scores', 'WinningTeam')
+    list_display = ('GameID', 'GameDate', 'Facility', 'HomeTeam', 'AwayTeam', 'Scores', 'WinningTeam')
     readonly_fields = ('GameID', 'GameDate')
     def has_add_permission(self, request):
         return False
@@ -55,6 +57,13 @@ class UniversityTeamsAdmin(admin.ModelAdmin):
     def get_model_perms(self, request):
         return {}
 
+class FacilityScheduleAdmin(admin.ModelAdmin):
+    list_display = ['facility_id', 'event_type', 'event_start', 'event_end']
+    readonly_fields = ['facility_id', 'event_type', 'event_start', 'event_end']
+
+    def get_model_perms(self, request):
+        return {}
+
 
 admin.site.register(University, UniversityAdmin)
 admin.site.register(Facilities, FacilitiesAdmin)
@@ -67,3 +76,4 @@ admin.site.register(GameData, GameDataAdmin)
 admin.site.register(PlayerGameSchedule, PlayerGameScheduleAdmin)
 admin.site.register(PlayerPracticeSchedule, PlayerPracticeScheduleAdmin)
 admin.site.register(UniversityTeams, UniversityTeamsAdmin)
+admin.site.register(FacilitySchedule, FacilityScheduleAdmin)

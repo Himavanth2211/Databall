@@ -20,7 +20,7 @@ BEGIN
 
     -- If the facility is booked
     IF NOT facility_available THEN
-        p_Message := 'The facility is already booked for the given time!';
+        p_Message := 'The facility is already booked for the given time! Please check facility schedules for exisitng bookings.';
     ELSE
         BEGIN
             -- Insert

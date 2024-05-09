@@ -1,10 +1,22 @@
 import cx_Oracle
-from .forms import SchedulePracticeForm, ScheduleGameForm, UpdateGameDetailsForm
+from .forms import SchedulePracticeForm, ScheduleGameForm, UpdateGameDetailsForm, ScheduleFilterForm
 from django.db import connection
-from .models import GameData, PlayerGameSchedule, PlayerPracticeSchedule, UniversityTeams
+from .models import GameData, PlayerGameSchedule, PlayerPracticeSchedule, UniversityTeams, FacilitySchedule
 from django.shortcuts import render, redirect
 from django.contrib import messages
 
+
+def validate_scores(scores, home_team_id, away_team_id, winning_team_id):
+    import re
+    match = re.match(r'^(\d+)-(\d+)$', scores)
+    if not match:
+        return False, "Invalid Scores format. Please use 'x-y' format."
+    home_score, away_score = int(match.group(1)), int(match.group(2))
+    expected_winner_id = home_team_id if home_score > away_score else away_team_id
+    if winning_team_id != expected_winner_id:
+        return False, "Invalid winning team. The scores do not match the winning team."
+
+    return True, ""
 
 def schedule_practice_view(request):
     if request.method == 'POST':
@@ -27,13 +39,13 @@ def schedule_practice_view(request):
                 ])
                 if 'is already booked for the' in message.getvalue():
                     messages.error(request, message.getvalue())
-                    return redirect('schedule_practice_view')
+                    return render(request, "admin/schedule_practice.html", {"form": form})
                 elif 'already booked for another game' in message.getvalue():
                     messages.error(request, message.getvalue())
-                    return redirect('schedule_practice_view')
+                    return render(request, "admin/schedule_practice.html", {"form": form})
                 else:
                     messages.success(request, message.getvalue())
-                return render(request, "admin/schedule_practice.html", {"form": form})
+                return redirect('schedule_practice_view')
             except Exception as e:
                 messages.error(request, str(e))
                 return render(request, "admin/schedule_practice.html", {"form": form})
@@ -60,7 +72,11 @@ def schedule_game_view(request):
 
                 winning_team = form.cleaned_data.get('WinningTeamID', None)
                 winning_team_id = winning_team.TeamID if winning_team else None  #PossibleBug
-
+                if scores is not None and winning_team is not None:
+                    valid, error_message = validate_scores(scores, home_team_id, away_team_id, winning_team_id)
+                    if not valid:
+                        messages.error(request, error_message)
+                        return render(request, "admin/schedule_game.html", {"form": form})
                 message = cursor.var(cx_Oracle.DB_TYPE_VARCHAR)
 
                 cursor.callproc("ScheduleGame", [
@@ -107,16 +123,25 @@ def update_game_details_view(request):
                 game_id = form.cleaned_data['GameID'].GameID
                 winning_team_id = form.cleaned_data['WinningTeamID'].TeamID
                 scores = form.cleaned_data['Scores']
-                import re
-                if not re.match(r'^\d+-\d+$', scores):
-                    messages.error(request, 'Invalid Scores, Please follow the format')
-                else:
-                    cursor.callproc("UpdateGameDetails", [
-                        game_id,
-                        winning_team_id,
-                        scores,
-                        message
-                    ])
+                cursor.execute("SELECT HomeTeamID, AwayTeamID FROM Game WHERE GameID = :1", [game_id])
+                game = cursor.fetchone()
+                if not game:
+                    messages.error(request, 'Game not found.')
+                    return render(request, "admin/update_game_details.html", {"form": form})
+
+                home_team_id, away_team_id = game
+
+                # Validate scores
+                valid, error_message = validate_scores(scores, home_team_id, away_team_id, winning_team_id)
+                if not valid:
+                    messages.error(request, error_message)
+                    return render(request, "admin/update_game_details.html", {"form": form})
+                cursor.callproc("UpdateGameDetails", [
+                    game_id,
+                    winning_team_id,
+                    scores,
+                    message
+                ])
 
                 if message.getvalue() == 'Game not found.':
                     messages.error(request, message.getvalue())
@@ -195,3 +220,27 @@ def player_practice_schedule_view(request):
 def university_teams_view(request):
     teams = UniversityTeams.objects.all()
     return render(request, 'admin/view_university_teams.html', {'teams': teams})
+
+
+def facility_schedule_view(request):
+    form = ScheduleFilterForm(request.GET or None)
+    schedules = FacilitySchedule.objects.all()
+
+    if form.is_valid():
+        facility = form.cleaned_data['facility_id']
+        if facility:
+            schedules = schedules.filter(facility_id=facility.FacilityID)
+
+
+        event_type = form.cleaned_data['event_type']
+        if event_type:
+            schedules = schedules.filter(event_type=event_type)
+
+        schedules = schedules.order_by('event_start')
+    else:
+        schedules = schedules.none()
+
+    return render(request, 'admin/view_facility_schedules.html', {
+        'form': form,
+        'schedules': schedules
+    })

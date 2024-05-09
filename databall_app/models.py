@@ -157,3 +157,13 @@ class UniversityTeams(models.Model):
     class Meta:
         managed = False
         db_table = 'UniversityTeams'
+
+class FacilitySchedule(models.Model):
+    facility_id = models.CharField(max_length=100, primary_key=True, db_column='FacilityID')
+    event_type = models.CharField(max_length=10, db_column= 'EventType')
+    event_start = models.DateTimeField(db_column='EventStart')
+    event_end = models.DateTimeField(db_column='EventEnd')
+
+    class Meta:
+        managed = False
+        db_table = 'FacilitySchedule'

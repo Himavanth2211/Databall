@@ -32,7 +32,7 @@ BEGIN
     facility_available := CheckFacilityAvailability(p_FacilityID, p_GameDate, 2);
     
     IF NOT facility_available THEN
-        p_Message := 'The facility is already booked for the given time!';
+        p_Message := 'The facility is already booked for the given time! Please check facility schedules for exisitng bookings.';
     ELSE
 
         INSERT INTO Game (

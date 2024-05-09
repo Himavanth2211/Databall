@@ -3,6 +3,7 @@ from django.core.exceptions import ValidationError
 
 from .models import Team, Facilities, Game
 
+
 class SchedulePracticeForm(forms.Form):
     PracticeID = forms.CharField(
         initial='<Automatically generated>',
@@ -21,18 +22,19 @@ class SchedulePracticeForm(forms.Form):
     FacilityID = forms.ModelChoiceField(queryset=Facilities.objects.all(), label="Select Facility: ")
 
 
-
 class ScheduleGameForm(forms.Form):
     HomeTeamID = forms.ModelChoiceField(queryset=Team.objects.all(), label="Select Home Team:")
     AwayTeamID = forms.ModelChoiceField(queryset=Team.objects.all(), label="Select Away Team:")
     GameDate = forms.DateTimeField(
         widget=forms.widgets.DateTimeInput(attrs={'type': 'datetime-local'}),
-        label="Game Date: "
+        label="Game Date: ",
+        help_text="Note: Each reservation includes a 1-hour maintenance break immediately following the scheduled slot."
     )
     FacilityID = forms.ModelChoiceField(queryset=Facilities.objects.all(), label="Select Facility:")
     #Optional
     Scores = forms.CharField(max_length=100, required=False, label="Scores (optional):")
-    WinningTeamID = forms.ModelChoiceField(queryset=Team.objects.all(), required=False, label="Select Winning Team (optional):")
+    WinningTeamID = forms.ModelChoiceField(queryset=Team.objects.all(), required=False,
+                                           label="Select Winning Team (optional):")
 
     def clean(self):
         cleaned_data = super().clean()
@@ -45,10 +47,15 @@ class ScheduleGameForm(forms.Form):
                 "Both Scores and Winning Team ID must be provided together, or neither should be entered.")
 
         return cleaned_data
+
+
 class UpdateGameDetailsForm(forms.Form):
-    GameID = forms.ModelChoiceField(queryset=Game.objects.all().select_related('HomeTeam', 'AwayTeam'), label="Select Game: ")
+    GameID = forms.ModelChoiceField(queryset=Game.objects.all().select_related('HomeTeam', 'AwayTeam'),
+                                    label="Select Game: ")
     WinningTeamID = forms.ModelChoiceField(required=True, queryset=Team.objects.all(), label="Select Winning Team: ")
-    Scores = forms.CharField(required=True, max_length=100, label="Enter Scores: ", help_text="Ex: '2-3' i.e HomeTeamScore - AwayTeamScore")
+    Scores = forms.CharField(required=True, max_length=100, label="Enter Scores: ",
+                             help_text="Ex: '2-3' i.e HomeTeamScore - AwayTeamScore")
+
 
 class IncreaseFacilityCapacityForm(forms.Form):
     FacilityID = forms.ModelChoiceField(
@@ -59,4 +66,17 @@ class IncreaseFacilityCapacityForm(forms.Form):
         min_value=1,
         label="Increased Amount:",
         help_text="Specify the total new capacity!"
+    )
+
+
+class ScheduleFilterForm(forms.Form):
+    facility_id = forms.ModelChoiceField(
+        queryset=Facilities.objects.all(),
+        label="Select Facility:",
+        required=False
+    )
+    event_type = forms.ChoiceField(
+        choices=[('', 'All'), ('Practice', 'Practice'), ('Game', 'Game')],
+        required=False,
+        label="Event Type"
     )
