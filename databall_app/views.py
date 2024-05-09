@@ -92,7 +92,7 @@ def schedule_game_view(request):
                     messages.error(request, message.getvalue())
                 elif message.getvalue() == 'Error: Winning team must be either the home team or the away team.':
                     messages.error(request, message.getvalue())
-                elif message.getvalue() == 'The facility is already booked for the given time!':
+                elif 'The facility is already booked for the given time!' in message.getvalue() :
                     messages.error(request, message.getvalue())
                 elif 'teams is already booked for another game or practice' in message.getvalue():
                     messages.error(request, message.getvalue())

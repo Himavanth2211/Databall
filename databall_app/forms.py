@@ -28,13 +28,13 @@ class ScheduleGameForm(forms.Form):
     GameDate = forms.DateTimeField(
         widget=forms.widgets.DateTimeInput(attrs={'type': 'datetime-local'}),
         label="Game Date: ",
-        help_text="Note: Each reservation includes a 1-hour maintenance break immediately following the scheduled slot."
+        help_text="Note: Each reservation includes a 1-hour maintenance break immediately following the scheduled slot and Each Game lasts for 2-hours by default."
     )
     FacilityID = forms.ModelChoiceField(queryset=Facilities.objects.all(), label="Select Facility:")
     #Optional
     Scores = forms.CharField(max_length=100, required=False, label="Scores (optional):")
     WinningTeamID = forms.ModelChoiceField(queryset=Team.objects.all(), required=False,
-                                           label="Select Winning Team (optional):")
+                                           label="Select Winning Team (optional):", help_text="Note: In case of tie, WinningTeam is whatever you choose!")
 
     def clean(self):
         cleaned_data = super().clean()
