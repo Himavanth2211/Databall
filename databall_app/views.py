@@ -10,13 +10,16 @@ def validate_scores(scores, home_team_id, away_team_id, winning_team_id):
     import re
     match = re.match(r'^(\d+)-(\d+)$', scores)
     if not match:
-        return False, "Invalid Scores format. Please use 'x-y' format."
+        return False, "Invalid Scores format. Please use 'HomeTeamScore-AwayTeamScore' format."
     home_score, away_score = int(match.group(1)), int(match.group(2))
     expected_winner_id = home_team_id if home_score > away_score else away_team_id
+    if winning_team_id not in [home_team_id, away_team_id]:
+        return True, ""  #Handled by procedure
     if winning_team_id != expected_winner_id:
         return False, "Invalid winning team. The scores do not match the winning team."
 
     return True, ""
+
 
 def schedule_practice_view(request):
     if request.method == 'POST':
@@ -38,7 +41,8 @@ def schedule_practice_view(request):
                     message
                 ])
                 if 'is already booked for the' in message.getvalue():
-                    messages.error(request, message.getvalue())
+                    messages.error(request, 'The facility is already booked for the given time! Please check facility '
+                                            'schedules for existing bookings.')
                     return render(request, "admin/schedule_practice.html", {"form": form})
                 elif 'already booked for another game' in message.getvalue():
                     messages.error(request, message.getvalue())
@@ -92,7 +96,7 @@ def schedule_game_view(request):
                     messages.error(request, message.getvalue())
                 elif message.getvalue() == 'Error: Winning team must be either the home team or the away team.':
                     messages.error(request, message.getvalue())
-                elif 'The facility is already booked for the given time!' in message.getvalue() :
+                elif 'The facility is already booked for the given time!' in message.getvalue():
                     messages.error(request, message.getvalue())
                 elif 'teams is already booked for another game or practice' in message.getvalue():
                     messages.error(request, message.getvalue())
@@ -230,7 +234,6 @@ def facility_schedule_view(request):
         facility = form.cleaned_data['facility_id']
         if facility:
             schedules = schedules.filter(facility_id=facility.FacilityID)
-
 
         event_type = form.cleaned_data['event_type']
         if event_type:

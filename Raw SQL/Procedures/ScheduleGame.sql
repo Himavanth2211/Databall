@@ -14,13 +14,13 @@ create or replace PROCEDURE ScheduleGame(
 ) AS
     facility_available BOOLEAN;
 BEGIN
-    IF p_WinningTeamID IS NOT NULL AND p_WinningTeamID NOT IN (p_HomeTeamID, p_AwayTeamID) THEN
-        p_Message := 'Error: Winning team must be either the home team or the away team.';
+    IF p_HomeTeamID = p_AwayTeamID THEN
+        p_Message := 'Error: Home team and away team cannot be the same.';
         RETURN;
     END IF;
     
-    IF p_HomeTeamID = p_AwayTeamID THEN
-        p_Message := 'Error: Home team and away team cannot be the same.';
+    IF p_WinningTeamID IS NOT NULL AND p_WinningTeamID NOT IN (p_HomeTeamID, p_AwayTeamID) THEN
+        p_Message := 'Error: Winning team must be either the home team or the away team.';
         RETURN;
     END IF;
 

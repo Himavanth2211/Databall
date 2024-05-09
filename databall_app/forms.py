@@ -15,7 +15,8 @@ class SchedulePracticeForm(forms.Form):
     TeamID = forms.ModelChoiceField(queryset=Team.objects.all(), label="Select Team: ")
     PracticeDate = forms.DateTimeField(
         widget=forms.widgets.DateTimeInput(attrs={'type': 'datetime-local'}),
-        label="Practice Date: "
+        label="Practice Date: ",
+        help_text="Note: Each reservation includes a 1-hour maintenance break immediately following the scheduled slot."
     )
     PracticeDuration = forms.IntegerField(min_value=1, label="Duration in hours: ")
     FocusArea = forms.CharField(max_length=100, label="Focus Area:")
@@ -28,20 +29,22 @@ class ScheduleGameForm(forms.Form):
     GameDate = forms.DateTimeField(
         widget=forms.widgets.DateTimeInput(attrs={'type': 'datetime-local'}),
         label="Game Date: ",
-        help_text="Note: Each reservation includes a 1-hour maintenance break immediately following the scheduled slot and Each Game lasts for 2-hours by default."
+        help_text="Note: Each reservation includes a 1-hour maintenance break immediately following the scheduled "
+                  "slot and Each Game lasts for 2-hours by default."
     )
     FacilityID = forms.ModelChoiceField(queryset=Facilities.objects.all(), label="Select Facility:")
     #Optional
     Scores = forms.CharField(max_length=100, required=False, label="Scores (optional):")
     WinningTeamID = forms.ModelChoiceField(queryset=Team.objects.all(), required=False,
-                                           label="Select Winning Team (optional):", help_text="Note: In case of tie, WinningTeam is whatever you choose!")
+                                           label="Select Winning Team (optional):", help_text="Note: In case of tie, "
+                                                                                              "WinningTeam is "
+                                                                                              "whatever you choose!")
 
     def clean(self):
         cleaned_data = super().clean()
         scores = cleaned_data.get('Scores')
         winning_team_id = cleaned_data.get('WinningTeamID')
 
-        # Check if either scores or winning_team_id is provided, then both must be provided
         if (scores and not winning_team_id) or (winning_team_id and not scores):
             raise ValidationError(
                 "Both Scores and Winning Team ID must be provided together, or neither should be entered.")
